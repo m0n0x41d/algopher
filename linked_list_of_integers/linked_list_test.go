@@ -433,3 +433,66 @@ func TestFindAllFromEmptyList(t *testing.T) {
 		t.Errorf("FindAll() = %v, want %v", len(got), 0)
 	}
 }
+
+func TestDeleteHeadFromTwoNodesList(t *testing.T) {
+	list := LinkedList{}
+	list.AddInTail(Node{value: 1})
+	list.AddInTail(Node{value: 2})
+
+	list.Delete(1, false)
+
+	got := list.Count()
+	want := 1
+	if got != want {
+		t.Errorf("Length after deletion = %v, want %v", got, want)
+	}
+
+	got = list.head.value
+	want = 2
+	if got != want {
+		t.Errorf("Head value = %v, want %v", got, want)
+	}
+
+	got = list.tail.value
+	want = 2
+	if got != want {
+		t.Errorf("Tail value = %v, want %v", got, want)
+	}
+
+	if list.head != list.tail {
+        t.Errorf("head != tail, but should be same node")
+    }
+    if list.head.next != nil {
+        t.Errorf("head.next = %v, want nil", list.head.next)
+    }
+}
+
+func TestDeleteTailFromTwoNodesList(t *testing.T) {
+	list := LinkedList{}
+	list.AddInTail(Node{value: 1})
+	list.AddInTail(Node{value: 2})
+
+	list.Delete(2, false)
+
+	got := list.Count()
+	want := 1
+	if got != want {
+		t.Errorf("Length after deletion = %v, want %v", got, want)
+	}
+
+	got = list.head.value
+	want = 1
+	if got != want {
+		t.Errorf("Head value = %v, want %v", got, want)
+	}
+
+	got = list.tail.value
+	want = 1
+	if got != want {
+		t.Errorf("Tail value = %v, want %v", got, want)
+	}
+
+	if list.head != list.tail {
+        t.Errorf("head != tail, but should be same node")
+    }
+}

@@ -6,6 +6,8 @@ import (
 	"reflect"
 )
 
+var _, _ = os.Args, reflect.TypeOf(0)
+
 type Node struct {
 	next  *Node
 	value int
@@ -17,7 +19,7 @@ type LinkedList struct {
 	tail   *Node
 }
 
-// O(1) – благодаря указателю на хвост
+// O(1) - tail pointer allows constant time append
 func (l *LinkedList) AddInTail(item Node) {
 	if l.head == nil {
 		l.head = &item
@@ -29,12 +31,12 @@ func (l *LinkedList) AddInTail(item Node) {
 	l.length++
 }
 
-// O(1) - ячейка-счетчик в самой структуре
+// O(1) - length counter stored in struct
 func (l *LinkedList) Count() int {
 	return l.length
 }
 
-// O(n) – линейный перебор списка до встречи вхождения
+// O(n) - linear search until match found
 func (l *LinkedList) Find(n int) (Node, error) {
 	for current := l.head; current != nil; current = current.next {
 		if current.value == n {
@@ -44,8 +46,8 @@ func (l *LinkedList) Find(n int) (Node, error) {
 	return Node{value: -1, next: nil}, errors.New("Node not found")
 }
 
-// По времени: O(n) – линейный перебор всего списку.
-// По памяти: O(k), где k – количество найденных элементо
+// Time: O(n) - full list traversal
+// Space: O(k) where k is number of found elements
 func (l *LinkedList) FindAll(n int) []Node {
 	var nodes []Node
 	for current := l.head; current != nil; current = current.next {
@@ -56,10 +58,10 @@ func (l *LinkedList) FindAll(n int) []Node {
 	return nodes
 }
 
-// O(n) при любом all – линейный перебор списка
-// Используется паттерн "два указателя" (prev, current) для однонаправленного списка,
-// т.к. нет возможности получить предыдущий узел напрямую.
-// Удаление головы вынесено в отдельный цикл, чтобы избежать проверки prev == nil на каждой итерации.
+// O(n) for any value of all - linear list traversal
+// Uses two-pointer pattern (prev, current) for singly linked list
+// since there is no way to get previous node directly.
+// Head deletion extracted to separate loop to avoid prev == nil check on each iteration.
 func (l *LinkedList) Delete(n int, all bool) {
 	for l.head != nil && l.head.value == n {
 		l.DeleteFirst(n, all)
@@ -91,9 +93,9 @@ func (l *LinkedList) Delete(n int, all bool) {
 	}
 }
 
-// O(k), где k – количество удаляемых элементов, но помним что O(k) ⊆ O(n)
-// В случае all:false – O(1)
-// В случае all:ture - в worst case (все элементы списка оказываются одного целевого значения) это O(n),
+// O(k) where k is number of deleted elements, but O(k) is subset of O(n)
+// When all:false - O(1)
+// When all:true - worst case (all elements have target value) is O(n)
 func (l *LinkedList) DeleteFirst(n int, all bool) {
 	for l.head != nil && l.head.value == n {
 		l.head = l.head.next
@@ -105,7 +107,7 @@ func (l *LinkedList) DeleteFirst(n int, all bool) {
 
 }
 
-// O(1) по указателям
+// O(1) - pointer operations only
 func (l *LinkedList) Insert(after *Node, add Node) {
 	if l.tail == after {
 		l.tail.next = &add
@@ -120,7 +122,7 @@ func (l *LinkedList) Insert(after *Node, add Node) {
 
 }
 
-// O(1) по указателям
+// O(1) - pointer operations only
 func (l *LinkedList) InsertFirst(first Node) {
 	if l.head == nil {
 		l.head = &first
@@ -134,12 +136,14 @@ func (l *LinkedList) InsertFirst(first Node) {
 
 }
 
-// O(1) по указателям
-// Память освобождается сборщиком мусора Go, когда на узлы не останется ссылок.
-// В языках без GC вероятно потребовался бы явный обход и освобождение каждого узла.
+// O(1) - pointer operations only
+// Memory is freed by Go garbage collector when no references to nodes remain.
+// In languages without GC explicit traversal and deallocation of each node would be required.
 func (l *LinkedList) Clean() {
 	l.length = 0
 	l.tail = nil
 	l.head = nil
 
 }
+
+
