@@ -61,10 +61,16 @@ func (l *LinkedList) FindAll(n int) []Node {
 // O(n) for any value of all - linear list traversal
 // Uses two-pointer pattern (prev, current) for singly linked list
 // since there is no way to get previous node directly.
-// Head deletion extracted to separate loop to avoid prev == nil check on each iteration.
 func (l *LinkedList) Delete(n int, all bool) {
 	for l.head != nil && l.head.value == n {
-		l.DeleteFirst(n, all)
+		l.head = l.head.next
+		l.length--
+		if l.head == nil {
+			l.tail = nil
+		}
+		if !all {
+			return
+		}
 	}
 
 	if l.head == nil {
@@ -91,20 +97,6 @@ func (l *LinkedList) Delete(n int, all bool) {
 			currentNode = currentNode.next
 		}
 	}
-}
-
-// O(k) where k is number of deleted elements, but O(k) is subset of O(n)
-// When all:false - O(1)
-// When all:true - worst case (all elements have target value) is O(n)
-func (l *LinkedList) DeleteFirst(n int, all bool) {
-	for l.head != nil && l.head.value == n {
-		l.head = l.head.next
-		l.length--
-		if !all {
-			return
-		}
-	}
-
 }
 
 // O(1) - pointer operations only

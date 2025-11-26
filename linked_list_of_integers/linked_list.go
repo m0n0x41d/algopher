@@ -50,7 +50,14 @@ func (l *LinkedList) FindAll(n int) []Node {
 
 func (l *LinkedList) Delete(n int, all bool) {
 	for l.head != nil && l.head.value == n {
-		l.DeleteFirst(n, all)
+		l.head = l.head.next
+		l.length--
+		if l.head == nil {
+			l.tail = nil
+		}
+		if !all {
+			return
+		}
 	}
 
 	if l.head == nil {
@@ -77,17 +84,6 @@ func (l *LinkedList) Delete(n int, all bool) {
 			currentNode = currentNode.next
 		}
 	}
-}
-
-func (l *LinkedList) DeleteFirst(n int, all bool) {
-	for l.head != nil && l.head.value == n {
-		l.head = l.head.next
-		l.length--
-		if !all {
-			return
-		}
-	}
-
 }
 
 func (l *LinkedList) Insert(after *Node, add Node) {
