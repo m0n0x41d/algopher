@@ -1,4 +1,4 @@
-package doubly_linked_list_of_ints
+package main
 
 import "testing"
 

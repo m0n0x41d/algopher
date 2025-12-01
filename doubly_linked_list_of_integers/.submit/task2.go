@@ -1,4 +1,4 @@
-package doubly_linked_list_of_ints
+package main
 
 import (
 	"errors"
@@ -316,5 +316,3 @@ func (l *LinkedList2) splitAt(node *Node) *LinkedList2 {
 	return &rightList
 
 }
-
-
