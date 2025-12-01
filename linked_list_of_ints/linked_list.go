@@ -1,4 +1,4 @@
-package linked_list
+package linked_list_of_ints
 
 import "errors"
 
@@ -53,8 +53,6 @@ func (l *LinkedList) FindAll(n int) []Node {
 }
 
 // O(n) for any value of all - linear list traversal
-// Uses two-pointer pattern (prev, current) for singly linked list
-// since there is no way to get previous node directly.
 func (l *LinkedList) Delete(n int, all bool) {
 	for l.head != nil && l.head.value == n {
 		l.head = l.head.next

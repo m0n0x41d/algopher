@@ -1,4 +1,4 @@
-package linked_list
+package linked_list_of_ints
 
 // This is a naive solution for the additional task because due to the mentioned weakness
 // of the linked list interface we have to access implementation details directly.

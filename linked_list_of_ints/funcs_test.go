@@ -1,4 +1,4 @@
-package linked_list
+package linked_list_of_ints
 
 import "testing"
 

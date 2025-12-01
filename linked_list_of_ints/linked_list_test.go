@@ -1,4 +1,4 @@
-package linked_list
+package linked_list_of_ints
 
 import "testing"
 
@@ -398,7 +398,6 @@ func TestDeleteFromEmptyList(t *testing.T) {
 	}
 }
 
-
 func TestDeleteOneNodeFromOneNodeList(t *testing.T) {
 	list := LinkedList{}
 	list.AddInTail(Node{value: 777})
@@ -460,11 +459,11 @@ func TestDeleteHeadFromTwoNodesList(t *testing.T) {
 	}
 
 	if list.head != list.tail {
-        t.Errorf("head != tail, but should be same node")
-    }
-    if list.head.next != nil {
-        t.Errorf("head.next = %v, want nil", list.head.next)
-    }
+		t.Errorf("head != tail, but should be same node")
+	}
+	if list.head.next != nil {
+		t.Errorf("head.next = %v, want nil", list.head.next)
+	}
 }
 
 func TestDeleteTailFromTwoNodesList(t *testing.T) {
@@ -493,6 +492,6 @@ func TestDeleteTailFromTwoNodesList(t *testing.T) {
 	}
 
 	if list.head != list.tail {
-        t.Errorf("head != tail, but should be same node")
-    }
+		t.Errorf("head != tail, but should be same node")
+	}
 }
