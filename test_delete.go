@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
+
+var _ = reflect.TypeOf("x")
 
 type Node struct {
 	next  *Node
