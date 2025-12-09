@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/list"
+	"errors"
 	"os"
 )
 
@@ -19,6 +20,10 @@ func (st *Stack[T]) Size() int {
 
 // O(1)
 func (st *Stack[T]) Peek() (T, error) {
+	if len(st.container) == 0 {
+		var zero T
+		return zero, errors.New("stack is empty")
+	}
 	result := st.container[len(st.container)-1]
 	return result, nil
 }
@@ -27,6 +32,10 @@ func (st *Stack[T]) Peek() (T, error) {
 // On a very large stack with many Pops, this
 // implementation will be inefficient in terms of memory usage.
 func (st *Stack[T]) Pop() (T, error) {
+	if len(st.container) == 0 {
+		var zero T
+		return zero, errors.New("stack is empty")
+	}
 	result := st.container[len(st.container)-1]
 	st.container = st.container[:len(st.container)-1]
 	return result, nil
