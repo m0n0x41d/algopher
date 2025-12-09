@@ -1,0 +1,35 @@
+package stack
+
+import (
+	"os"
+)
+
+var _ = os.Args
+
+// === easiest Stack with the tail of the Go slice ===
+type Stack[T any] struct {
+	container []T
+}
+
+// O(1)
+func (st *Stack[T]) Size() int {
+	return len(st.container)
+}
+
+// O(1)
+func (st *Stack[T]) Peek() (T, error) {
+	result := st.container[len(st.container)-1]
+	return result, nil
+}
+
+// O(1) by time,
+func (st *Stack[T]) Pop() (T, error) {
+	result := st.container[len(st.container)-1]
+	st.container = st.container[:len(st.container)-1]
+	return result, nil
+}
+
+// O(1?)
+func (st *Stack[T]) Push(itm T) {
+	st.container = append(st.container, itm)
+}
