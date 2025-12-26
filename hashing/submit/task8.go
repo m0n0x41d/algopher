@@ -13,11 +13,14 @@ var _ = strconv.Itoa(0)
 // The answer to the ultimate question of life, the universe, and everything
 const MAGIC_NUMBER = 42
 
+// Upper directory HashTable implementation uses
+// pointers to strings as values for slota container.
+// Here is use emply strings only to respect Server signature
 type HashTable struct {
 	size  int
 	step  int
 	salt  uint // random salt for HashDoS protection
-	slots []*string
+	slots []string
 }
 
 // Generates random salt for HashDoS protection.
@@ -31,7 +34,7 @@ func Init(sz int, stp int) HashTable {
 		salt:  uint(r.Uint64()),
 		slots: nil,
 	}
-	ht.slots = make([]*string, sz)
+	ht.slots = make([]string, sz)
 	return ht
 }
 
@@ -51,7 +54,7 @@ func (ht *HashTable) SeekSlot(value string) int {
 	start := ht.HashFun(value)
 	idx := start
 	for {
-		if ht.slots[idx] == nil {
+		if ht.slots[idx] == "" {
 			return idx
 		}
 		idx = (idx + ht.step) % ht.size
@@ -65,12 +68,11 @@ func (ht *HashTable) SeekSlot(value string) int {
 // Space: O(1)
 // Returns slot index or -1 if table is full.
 func (ht *HashTable) Put(value string) int {
-	slotCandidate := ht.SeekSlot(value)
-	if slotCandidate > -1 {
-		ht.slots[slotCandidate] = &value
-		return slotCandidate
+	idx := ht.SeekSlot(value)
+	if idx != -1 {
+		ht.slots[idx] = value
 	}
-	return -1
+	return idx
 }
 
 // Time: O(1) average, O(n) worst case (many collisions)
@@ -79,10 +81,10 @@ func (ht *HashTable) Find(value string) int {
 	start := ht.HashFun(value)
 	idx := start
 	for {
-		if ht.slots[idx] == nil {
+		if ht.slots[idx] == "" {
 			return -1
 		}
-		if *ht.slots[idx] == value {
+		if ht.slots[idx] == value {
 			return idx
 		}
 		idx = (idx + ht.step) % ht.size
