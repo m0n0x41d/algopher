@@ -1,4 +1,4 @@
-package native_dict
+package main
 
 import (
 	//      "fmt"
