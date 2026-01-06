@@ -6,8 +6,6 @@ import (
 	"strconv"
 
 	"constraints"
-
-	"golang.org/x/exp/maps"
 )
 
 var _ = os.Stdout
@@ -77,10 +75,11 @@ func (ps *PowerSet[T]) Union(set2 PowerSet[T]) PowerSet[T] {
 		bigger, smaller = &set2, ps
 	}
 
-	var result = PowerSet[T]{
-		storage: maps.Clone(bigger.storage),
-		count:   bigger.count,
+	result := Init[T]()
+	for k := range bigger.storage {
+		result.storage[k] = struct{}{}
 	}
+	result.count = bigger.count
 
 	for i := range smaller.storage {
 		result.Put(i)
