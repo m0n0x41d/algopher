@@ -23,7 +23,6 @@ type HashTable struct {
 	slots []string
 }
 
-// Generates random salt for HashDoS protection.
 // Time: O(n) where n = sz (allocating slots)
 // Space: O(n)
 func Init(sz int, stp int) HashTable {
